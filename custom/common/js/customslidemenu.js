@@ -1,0 +1,148 @@
+/**
+ * options
+ * 	btn: element of Hamburger button. :default 'btn_hamburger'
+ * 	menu: element of menu area. :default 'menu'
+ *  menu_type: distination [left, right]
+ *  menu_width: [recommend config] width of menu
+ *  content: content area. default 'row'
+ *  
+ */
+var CustomSlideMenu = function(options){
+	this.o = options;
+	
+	// メニュー出力方向
+	this.direction = ["left", "right", "top", "bottom"];
+
+	// メンバ変数設定
+	this.init();
+	// ボタン設定
+	this.buttonReady();
+	// メニュー設定
+	this.menuReady();
+	// コンテンツ設定
+	this.contentsReady();
+}
+
+CustomSlideMenu.prototype.init = function() {
+	/**
+	 * ハンバーガーボタンの設定
+	 */
+	// オブジェクト名
+	if (this.o.btn === undefined){
+		this.o.btn = ".btn_hamburger";
+	}
+	
+	/**
+	 * メニューの設定
+	 */
+	// メニューのオブジェクト名
+	if (this.o.menu === undefined){
+		this.o.menu = ".menu";
+	}
+	// メニューのパターン
+	if (this.o.menu_type === undefined || !$.inArray(this.o.menu_type, this.direction)){
+		this.o.menu_type = "left";
+	}
+	// 横幅指定
+	if (this.o.menu_width === undefined){
+		this.o.menu_width = $(this.o.menu).width();
+	}
+	// メニューの横幅を明示してpx取得可能にする
+	$(this.o.menu).width(this.o.menu_width);
+
+	/**
+	 * メインコンテンツ
+	 */
+	if (this.o.content === undefined){
+		this.o.content = ".row";
+	}
+}
+
+/**
+ * ハンバーガーボタンの初期設定
+ */
+CustomSlideMenu.prototype.buttonReady = function(){
+	var root = this;
+	// click event
+	$(this.o.btn).click(
+		function(){
+			root.clickButton();
+		}
+	);
+}
+
+/**
+ * メニューの初期設定
+ */
+CustomSlideMenu.prototype.menuReady = function(){
+	var root = this;
+	$(this.o.menu).css("transition", "all 0.8s");
+
+	// 左メニューの場合はメニューをマイナス領域に渡す
+	if (this.o.menu_type == "left"){
+		$(this.o.menu).css("position", "absolute");
+		$(this.o.menu).css("top", "0px");
+		$(this.o.menu).css(this.o.menu_type, $(this.o.menu).width() * (-1));
+		$(this.o.menu).css("width", this.o.menu_width);
+		$(this.o.menu).css("height", "100%");
+	}
+	if (this.o.menu_type == "right"){
+		$(this.o.menu).css("position", "absolute");
+		$(this.o.menu).css("top", "0px");
+		$(this.o.menu).css(this.o.menu_type, $(this.o.menu).width() * (-1));
+		$(this.o.menu).css("width", this.o.menu_width);
+		$(this.o.menu).css("height", "100%");
+	}
+}
+
+/**
+ * コンテンツ部分の初期設定
+ */
+CustomSlideMenu.prototype.contentsReady = function(){
+	var root = this;
+	// メニューと同時に動かすためにrelative,overflow,rigth設定が必要
+	$(this.o.content).css("position", "relative");
+	$(this.o.content).css("overflow", "auto");
+	$(this.o.content).css(this.o.menu_type, "0px");
+	$(this.o.content).css("transition", "all 0.8s");
+	// 横スクロールを表示しないため
+	$("body").css("overflow-x", "hidden");
+}
+
+/**
+ * ボタンクリックの動作
+ */
+CustomSlideMenu.prototype.clickButton = function(){
+	var root = this;
+	var overlayHtml = '<div class="custom_menu_overlay" style="width: 100%; height: 120%; position: fixed; top: 0; left: 0; background-color: rgba(0,0,0,0.25); z-index: 10;" />';
+
+	// buttonに属性を付与
+	$(this.o.btn).toggleClass("active");
+	
+	// ボタンのクラス判定
+	if ($(this.o.btn).hasClass("active")) {
+		// メニューを表示
+		$(this.o.menu).css(this.o.menu_type, "0px");
+		// コンテンツ部分を動かす
+		$(this.o.content).css("position", "relative");
+		$(this.o.content).css("overflow", "hidden");
+		$(this.o.content).css(this.o.menu_type, $(this.o.menu).width());
+
+		// オーバーレイ
+		$(this.o.content).before(overlayHtml);
+		$(".custom_menu_overlay").click(
+			function(){
+				root.clickButton();
+			}
+		);
+	} else{
+		// メニューを非表示
+		$(this.o.menu).css(this.o.menu_type, $(this.o.menu).width() * (-1));
+		// コンテンツ部分を元に戻す
+		$(this.o.content).css("position", "relative");
+		$(this.o.content).css("overflow", "auto");
+		$(this.o.content).css(this.o.menu_type, "0px");
+
+		$(".custom_menu_overlay").remove();
+	}
+}

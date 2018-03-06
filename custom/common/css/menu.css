@@ -1,91 +1,80 @@
-/* ハンバーガーボタン */
-.toggle {
-	position: relative; /* bodyに対しての絶対位置指定 */
+/**
+ * ハンバーガーボタンの運用はcssで実装
+ * 
+ */
+.btn_hamburger {
+	position: relative; 	/* body対する位置 */
 	left: 10px;
 	top: 10px;
 	display: block;
 	box-sizing: content-box;
 	width: 45px;
-	height: 50px;
+	height: 40px;
 	cursor: pointer;
 	z-index: 100000;
 	background: #cccccc;
 }
-.toggle span {
+.btn_hamburger span {
 	display: block;
-	position: absolute; /* .toggleに対して */
+	position: absolute; 
 	width: 70%;
 	border-bottom: solid 3px #000000;
 	-webkit-transition: .35s ease-in-out;
 	-moz-transition: .35s ease-in-out;
 	transition: .35s ease-in-out;
-	padding-top: 5px;
-	right: 7px;
+	margin: 0 auto;
+	top: 19px;		/* 目視確認で調整する値 */
+	left: 15%;
 }
-.toggle span:nth-child(1) {
-	top: 3px;
+.btn_hamburger span:nth-child(1) {
+	-webkit-transform: translateY(-10px);
+	-moz-transform: translateY(-10px);
+	transform: translateY(-10px);
 }
-.toggle span:nth-child(2) {
-	top: 13px;
+.btn_hamburger span:nth-child(2) {
+	-webkit-transform: rotate(0deg);
+	-moz-transform: rotate(0deg);
+	transform: rotate(0deg);
 }
-.toggle span:nth-child(3) {
-	top: 23px;
+.btn_hamburger span:nth-child(3) {
+	-webkit-transform: translateY(10px);
+	-moz-transform: translateY(10px);
+	transform: translateY(10px);
 }
-.toggle span:nth-child(4) {
-	border: none;
-	top: 28px;
-	left: 5px;
-	font-size: 12px;
-	font-weight: bold;
-}
-
 /* 最初のspanをマイナス45度に */
-.toggle.active span:nth-child(1) {
-	top: 15px;
-	left: 4px;
-	-webkit-transform: rotate(-45deg);
-	-moz-transform: rotate(-45deg);
-	transform: rotate(-45deg);
+.btn_hamburger.active span:nth-child(1) {
+	-webkit-transform: rotate(-45deg) translateY(0px);
+	-moz-transform: rotate(-45deg) translateY(0px);
+	transform: rotate(-45deg) translateY(0px);
 }
-/* 2番目と3番目のspanを45度に */
-.toggle.active span:nth-child(2),
-.toggle.active span:nth-child(3) {
-	top: 15px;
-	-webkit-transform: rotate(45deg);
-	-moz-transform: rotate(45deg);
-	transform: rotate(45deg);
+/* 2番目は消える */
+.btn_hamburger.active span:nth-child(2) {
+	display: none;
+}
+/* 3番目のspanを45度に */
+.btn_hamburger.active span:nth-child(3) {
+	-webkit-transform: rotate(45deg) translateY(0px);
+	-moz-transform: rotate(45deg) translateY(0px);
+	transform: rotate(45deg) translateY(0px);
 }
 /* ハンバーガーボタン */
 
-/* グローバル設定 */
-.row {
-	position: fixed;
-	transform: translateX(0px);
-}
-/* グローバル設定 */
-
 /* グローバルメニュー */
-.global_nav {
-	position: absolute;
-    top: 0;
-    left: 0;
-	width: 300px;
-	height: 100%;
-	display: none;
+.menu {
     padding: 0em 0em;
     text-align: left;
     color: #000;
-    background: aliceblue;
-	transition: all 0.8s;
+	background: aliceblue;
+	z-index: 11;
 }
 
 /* 左マージンをなくしてリスト標準の間を消す */
-.global_nav ul {
+.menu ul {
 	margin: 0;
 	padding: 0;
 }
 
-.global_nav li {
+.menu li {
 	width: 100%;
 	padding: 0;
 	border-top: 1px solid aliceblue;
@@ -94,7 +83,7 @@
 }
 
 /* リンク */
-.global_nav li a {
+.menu li a {
 	display: block;
 	padding: 1em 5%;
 	margin: 0;
@@ -103,7 +92,7 @@
 }
 
 /* 延長可能の目印としての[+] */
-.global_nav ul > li > a + ul + a {
+.menu ul > li > a + ul + a {
 	display: block;
 	padding: 1em 5%;
 	margin: 0;
@@ -114,18 +103,26 @@
 }
 
 /* サブメニューの初期設定 */
-.global_nav li a + ul {
+.menu li a + ul {
 	display: none;
 }
 
-/* .global_navに.activeが追加 */
-.global_nav.active {
-	/* transform: translateX(0%); */
+/* グローバル設定 */
+/* .row {
+	overflow: relative;
+	left: 0px;
+	position: relative;
+	transform: translateX(0px);
+} */
+/* コンテンツ各種をrowに格納した場合のスライド設定 */
+/* .menuに.activeが追加 */
+/* .menu.active {
+	transform: translateX(0%);
 	display: block;
-}
-
-.row.active {
-	transform: translateX(330px);
+} */
+/* .row.active {
+	transform: translateX(300px);
 	overflow: hidden;
 	position: fixed;
-}
+} */
+/* End /グローバル設定 */
