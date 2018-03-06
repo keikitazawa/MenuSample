@@ -65,7 +65,7 @@
     text-align: left;
     color: #000;
 	background: aliceblue;
-	z-index: 11;
+	z-index: 1000;
 }
 
 /* 左マージンをなくしてリスト標準の間を消す */
@@ -106,23 +106,3 @@
 .menu li a + ul {
 	display: none;
 }
-
-/* グローバル設定 */
-/* .row {
-	overflow: relative;
-	left: 0px;
-	position: relative;
-	transform: translateX(0px);
-} */
-/* コンテンツ各種をrowに格納した場合のスライド設定 */
-/* .menuに.activeが追加 */
-/* .menu.active {
-	transform: translateX(0%);
-	display: block;
-} */
-/* .row.active {
-	transform: translateX(300px);
-	overflow: hidden;
-	position: fixed;
-} */
-/* End /グローバル設定 */

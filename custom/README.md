@@ -26,6 +26,7 @@ var vavi = new CustomSlideMenu(
 - menu メニュー表示の領域の属性。デフォルトは「.menu」
 - menu_type メニューが出てくる方向。left,rightのいずれか。デフォルトは「left」
 - menu_width メニューの幅。デフォルトはJavaScriptで取れる幅になるので設定することを推奨
+- menu_zindex メニューのz-index値。デフォルトは1000。メニューに対して背景になるオーバーレイは設定値-1になる。
 - content コンテンツ部分。デフォルトは「.row」
 
 ## 仕様
@@ -39,6 +40,15 @@ var vavi = new CustomSlideMenu(
 	right: -300px;	/* 右メニューの場合のみ。数値はパラメータかjavascriptで取得される値 */
 	position: relative;
 	overflow: hidden;
+}
+.menu {
+	transition: all 0.8s;
+	position: absolute;
+	top: 0px;
+	height: 100%;
+	width: [設定値];
+	left: [設定値] * (-1);		/* 左メニューのみ */
+	right: [設定値] * (-1);	/* 右メニューのみ */
 }
 ```
 

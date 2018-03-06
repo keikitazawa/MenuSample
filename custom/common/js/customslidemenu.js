@@ -4,6 +4,7 @@
  * 	menu: element of menu area. :default 'menu'
  *  menu_type: distination [left, right]
  *  menu_width: [recommend config] width of menu
+ *  menu_zindex [recommend config] z-index value. default 1000.
  *  content: content area. default 'row'
  *  
  */
@@ -39,6 +40,14 @@ CustomSlideMenu.prototype.init = function() {
 	if (this.o.menu === undefined){
 		this.o.menu = ".menu";
 	}
+	// メニューのオブジェクト名からオーバーレイの名前を取得
+	var menuNames = this.o.menu.match(/^[\.\#]\S{1,}/);
+	if (menuNames.length > 0){
+		this.o.menu_overlay = menuNames[0].slice(1) + "_overlay";
+	}else {
+		this.o.menu_overlay = "menu_overlay";
+	}
+	
 	// メニューのパターン
 	if (this.o.menu_type === undefined || !$.inArray(this.o.menu_type, this.direction)){
 		this.o.menu_type = "left";
@@ -46,6 +55,10 @@ CustomSlideMenu.prototype.init = function() {
 	// 横幅指定
 	if (this.o.menu_width === undefined){
 		this.o.menu_width = $(this.o.menu).width();
+	}
+	// z-index
+	if (this.o.menu_zindex === undefined){
+		this.o.menu_zindex = 1000;
 	}
 	// メニューの横幅を明示してpx取得可能にする
 	$(this.o.menu).width(this.o.menu_width);
@@ -114,7 +127,12 @@ CustomSlideMenu.prototype.contentsReady = function(){
  */
 CustomSlideMenu.prototype.clickButton = function(){
 	var root = this;
-	var overlayHtml = '<div class="custom_menu_overlay" style="width: 100%; height: 120%; position: fixed; top: 0; left: 0; background-color: rgba(0,0,0,0.25); z-index: 10;" />';
+	var overlayHtml 
+		= '<div class="' + this.o.menu_overlay + '" '
+		+ 'style="width: 100%; height: 120%; '
+		+ 'position: fixed; top: 0; left: 0; '
+		+ 'background-color: rgba(0,0,0,0.25); '
+		+ 'z-index: ' + (this.o.menu_zindex -1) + ';" />';
 
 	// buttonに属性を付与
 	$(this.o.btn).toggleClass("active");
@@ -128,9 +146,9 @@ CustomSlideMenu.prototype.clickButton = function(){
 		$(this.o.content).css("overflow", "hidden");
 		$(this.o.content).css(this.o.menu_type, $(this.o.menu).width());
 
-		// オーバーレイ
+		// オーバーレイの設定
 		$(this.o.content).before(overlayHtml);
-		$(".custom_menu_overlay").click(
+		$("." + this.o.menu_overlay).click(
 			function(){
 				root.clickButton();
 			}
@@ -142,7 +160,7 @@ CustomSlideMenu.prototype.clickButton = function(){
 		$(this.o.content).css("position", "relative");
 		$(this.o.content).css("overflow", "auto");
 		$(this.o.content).css(this.o.menu_type, "0px");
-
-		$(".custom_menu_overlay").remove();
+		// オーバーレイの削除
+		$("." + this.o.menu_overlay).remove();
 	}
 }
