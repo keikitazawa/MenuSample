@@ -3,7 +3,7 @@ $(function() {
 		{
 			"btn": ".btn_hamburger", 
 			"menu_width": "300px",
-			"menu_type": "left"
+			"menu_type": "top"
 		}
 	);
 	/**
