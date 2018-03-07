@@ -6,7 +6,7 @@
  *  menu_width: [recommend config] width of menu
  *  menu_zindex [recommend config] z-index value. default 1000.
  *  content: content area. default 'row'
- *  
+ *  duration: slide speed(Unit is MilliSeconds). default 700.
  */
 var CustomSlideMenu = function(options){
 	this.o = options;
@@ -77,6 +77,10 @@ CustomSlideMenu.prototype.init = function() {
 	// メニューの横幅を明示してpx取得可能にする
 	$(this.o.menu).width(this.o.menu_width);
 
+	// 処理時間を設定
+	if (this.o.duration === undefined){
+		this.o.duration = 700;
+	}
 	/**
 	 * メインコンテンツ
 	 */
@@ -102,23 +106,23 @@ CustomSlideMenu.prototype.buttonReady = function(){
  * メニューの初期設定
  */
 CustomSlideMenu.prototype.menuReady = function(){
-	var root = this;
-	$(this.o.menu).css("transition", "all 0.8s");
-	
-	// 左・右メニューの場合はメニューをマイナス領域に渡す
+	// スライドで要する時間
+	$(this.o.menu).css("transition-duration", this.o.duration + "ms");
+	// メニューと同時に動かすためにposition,overflow,[left, rigth ,top, bottom]設定が必要
+	$(this.o.menu).css("position", "absolute");
+	$(this.o.menu).css(this.o.menu_type, this.o.menu_width * (-1));
+	$(this.o.menu).hide();
+
+	// メニュー幅を０にする
 	if (this.o.menu_type == "left" || this.o.menu_type == "right"){
-		$(this.o.menu).css("position", "absolute");
 		$(this.o.menu).css("top", "0px");
-		$(this.o.menu).css(this.o.menu_type, this.o.menu_width * (-1));
 		$(this.o.menu).css("width", this.o.menu_width);
 		$(this.o.menu).css("height", "100%");
 	}
 	if (this.o.menu_type == "top" || this.o.menu_type == "bottom"){
-		$(this.o.menu).css("position", "absolute");
 		$(this.o.menu).css("left", "0px");
-		$(this.o.menu).css(this.o.menu_type, this.o.menu_width * (-1));
 		$(this.o.menu).css("width", "100%");
-		$(this.o.menu).css("height", "auto");
+		$(this.o.menu).css("height", this.o.menu_width);
 	}
 }
 
@@ -126,26 +130,102 @@ CustomSlideMenu.prototype.menuReady = function(){
  * コンテンツ部分の初期設定
  */
 CustomSlideMenu.prototype.contentsReady = function(){
-	var root = this;
-	// メニューと同時に動かすためにrelative,overflow,rigth設定が必要
+	// スライドで要する時間
+	$(this.o.content).css("transition-duration", this.o.duration + "ms");
+	// メニューと同時に動かすためにposition,overflow,[left, rigth ,top, bottom]設定が必要
 	$(this.o.content).css("position", "relative");
-	$(this.o.content).css("overflow", "auto");
+	// $(this.o.content).css("overflow", "auto");
 	$(this.o.content).css(this.o.menu_type, "0px");
-	$(this.o.content).css("transition", "all 0.8s");
-	// 横スクロールを表示しないため
-	if (this.o.menu_type == "left" || this.o.menu_type == "right"){
-		$("body").css("overflow-x", "hidden");
-	}
-	// 縦スクロールは表示
-	// if (this.o.menu_type == "top" || this.o.menu_type == "bottom"){
-	// 	$("body").css("overflow-y", "hidden");
-	// }
 }
 
 /**
  * ボタンクリックの動作
  */
 CustomSlideMenu.prototype.clickButton = function(){
+	var root = this;
+
+	// buttonに属性を付与
+	$(this.o.btn).toggleClass("active");
+	
+	// ボタンのクラス判定
+	if ($(this.o.btn).hasClass("active")) {
+
+		// 画面スクロールを止めてメニューのスクロールを発生させる
+		$("body").css("overflow", "hidden");
+		// 横スクロールを表示しないため
+		if (this.o.menu_type == "left" || this.o.menu_type == "right"){
+			$(this.o.menu).css("overflow-x", "scroll");
+		}
+		// 縦スクロールを表示しないため
+		if (this.o.menu_type == "top" || this.o.menu_type == "bottom"){
+			$("body").css("overflow", "hidden");
+			$(this.o.menu).css("overflow-y", "scroll");
+		}
+
+		// メニュー表示→アニメーション
+		this.__buildOverlay();
+		this.__showMenu();
+		this.__inMenu();
+	} else{
+
+		//debug--
+		// 横スクロールを表示しないため
+		if (this.o.menu_type == "left" || this.o.menu_type == "right"){
+			$("body").css("overflow", "auto");
+			$(this.o.menu).css("overflow-x", "auto");
+		}
+		// 縦スクロールは表示
+		if (this.o.menu_type == "top" || this.o.menu_type == "bottom"){
+			$("body").css("overflow", "auto");
+			$(this.o.menu).css("overflow-y", "auto");
+		}
+
+		// メニュー移動→移動中に（非表示＆オーバーレイ削除）
+		this.__outMenu();
+		setTimeout(
+			function(){
+				root.__hideMenu();
+				root.__removeOverlay();
+			},
+			root.o.duration
+		);
+	}
+}
+/**
+ * メニューの物理的表示
+ */
+CustomSlideMenu.prototype.__showMenu = function(){
+	$(this.o.menu).show();
+}
+/** 
+ * メニューのスライドイン
+ */
+CustomSlideMenu.prototype.__inMenu = function(){
+	$(this.o.menu).css(this.o.menu_type, 0);
+	$(this.o.content).css("position", "relative");
+	$(this.o.content).css("overflow", "hidden");
+	$(this.o.content).css(this.o.menu_type, this.o.menu_width);
+}
+/**
+ * メニューのスライドアウト
+ */
+CustomSlideMenu.prototype.__outMenu = function(){
+	$(this.o.menu).css(this.o.menu_type, this.o.menu_width * (-1));
+	$(this.o.content).css("position", "relative");
+	$(this.o.content).css("overflow", "auto");
+	$(this.o.content).css(this.o.menu_type, 0);
+}
+/** 
+ * メニューの物理的非表示
+ */
+CustomSlideMenu.prototype.__hideMenu = function(){
+	$(this.o.menu).hide();
+}
+
+/** 
+ * オーバーレイの作成
+ */
+CustomSlideMenu.prototype.__buildOverlay = function(){
 	var root = this;
 	var overlayHtml 
 		= '<div class="' + this.o.menu_overlay + '" '
@@ -154,33 +234,17 @@ CustomSlideMenu.prototype.clickButton = function(){
 		+ 'background-color: rgba(0,0,0,0.25); '
 		+ 'z-index: ' + (this.o.menu_zindex -1) + ';" />';
 
-	// buttonに属性を付与
-	$(this.o.btn).toggleClass("active");
-	
-	// ボタンのクラス判定
-	if ($(this.o.btn).hasClass("active")) {
-		// メニューを表示
-		$(this.o.menu).css(this.o.menu_type, "0px");
-		// コンテンツ部分を動かす
-		$(this.o.content).css("position", "relative");
-		$(this.o.content).css("overflow", "hidden");
-		$(this.o.content).css(this.o.menu_type, this.o.menu_width);
-
-		// オーバーレイの設定
-		$(this.o.content).before(overlayHtml);
-		$("." + this.o.menu_overlay).click(
-			function(){
-				root.clickButton();
-			}
-		);
-	} else{
-		// メニューを非表示
-		$(this.o.menu).css(this.o.menu_type, this.o.menu_width * (-1));
-		// コンテンツ部分を元に戻す
-		$(this.o.content).css("position", "relative");
-		$(this.o.content).css("overflow", "auto");
-		$(this.o.content).css(this.o.menu_type, "0px");
-		// オーバーレイの削除
-		$("." + this.o.menu_overlay).remove();
-	}
+	// オーバーレイの設定
+	$(this.o.content).before(overlayHtml);
+	$("." + this.o.menu_overlay).click(
+		function(){
+			root.clickButton();
+		}
+	);
+}
+/**
+ * オーバーレイの削除
+ */
+CustomSlideMenu.prototype.__removeOverlay = function(){
+	$("." + this.o.menu_overlay).remove();
 }

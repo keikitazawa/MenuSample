@@ -3,8 +3,23 @@ $(function() {
 		{
 			"btn": ".btn_hamburger", 
 			"menu_width": "300px",
-			"menu_type": "top"
+			"menu_type": "left"
 		}
+		// {
+		// 	"btn": ".btn_hamburger", 
+		// 	"menu_width": "300px",
+		// 	"menu_type": "right"
+		// }
+		// {
+		// 	"btn": ".btn_hamburger", 
+		// 	"menu_width": "100%",
+		// 	"menu_type": "top"
+		// }
+		// {
+		// 	"btn": ".btn_hamburger", 
+		// 	"menu_width": "100%",
+		// 	"menu_type": "bottom"
+		// }
 	);
 	/**
 	 * ナビのリンクで子メニューを表示
