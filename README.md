@@ -2,8 +2,8 @@
 メニューのサンプル
 
 ## hiraku.js
-[hiraku.js](https://appleple.github.io/hiraku/)
-[有限会社アップルップル] (https://www.appleple.com/blog/javascript/hiraku-js.html)
+[hiraku.js](https://appleple.github.io/hiraku/)  
+[有限会社アップルップル](https://www.appleple.com/blog/javascript/hiraku-js.html)
 
 ## drawer
 [Drawer](http://git.blivesta.com/drawer/)  
