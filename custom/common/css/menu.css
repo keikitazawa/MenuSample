@@ -2,7 +2,7 @@
  * ハンバーガーボタンの運用はcssで実装
  * 
  */
-.btn_hamburger {
+div[class^=btn_hamburger]{
 	position: relative; 	/* body対する位置 */
 	left: 10px;
 	top: 10px;
@@ -14,7 +14,7 @@
 	z-index: 100000;
 	background: #cccccc;
 }
-.btn_hamburger span {
+div[class^=btn_hamburger] span {
 	display: block;
 	position: absolute; 
 	width: 70%;
@@ -26,33 +26,33 @@
 	top: 19px;		/* 目視確認で調整する値 */
 	left: 15%;
 }
-.btn_hamburger span:nth-child(1) {
+div[class^=btn_hamburger]  span:nth-child(1) {
 	-webkit-transform: translateY(-10px);
 	-moz-transform: translateY(-10px);
 	transform: translateY(-10px);
 }
-.btn_hamburger span:nth-child(2) {
+div[class^=btn_hamburger]  span:nth-child(2) {
 	-webkit-transform: rotate(0deg);
 	-moz-transform: rotate(0deg);
 	transform: rotate(0deg);
 }
-.btn_hamburger span:nth-child(3) {
+div[class^=btn_hamburger]  span:nth-child(3) {
 	-webkit-transform: translateY(10px);
 	-moz-transform: translateY(10px);
 	transform: translateY(10px);
 }
 /* 最初のspanをマイナス45度に */
-.btn_hamburger.active span:nth-child(1) {
+div[class^=btn_hamburger].active span:nth-child(1) {
 	-webkit-transform: rotate(-45deg) translateY(0px);
 	-moz-transform: rotate(-45deg) translateY(0px);
 	transform: rotate(-45deg) translateY(0px);
 }
 /* 2番目は消える */
-.btn_hamburger.active span:nth-child(2) {
+div[class^=btn_hamburger].active span:nth-child(2) {
 	display: none;
 }
 /* 3番目のspanを45度に */
-.btn_hamburger.active span:nth-child(3) {
+div[class^=btn_hamburger].active span:nth-child(3) {
 	-webkit-transform: rotate(45deg) translateY(0px);
 	-moz-transform: rotate(45deg) translateY(0px);
 	transform: rotate(45deg) translateY(0px);
@@ -60,7 +60,7 @@
 /* ハンバーガーボタン */
 
 /* グローバルメニュー */
-.menu {
+div[class$=menu] {
     padding: 0em 0em;
     text-align: left;
     color: #000;
@@ -69,12 +69,12 @@
 }
 
 /* 左マージンをなくしてリスト標準の間を消す */
-.menu ul {
+div[class$=menu] ul {
 	margin: 0;
 	padding: 0;
 }
 
-.menu li {
+div[class$=menu] li {
 	width: 100%;
 	padding: 0;
 	border-top: 1px solid aliceblue;
@@ -83,7 +83,7 @@
 }
 
 /* リンク */
-.menu li a {
+div[class$=menu] li a {
 	display: block;
 	padding: 1em 5%;
 	margin: 0;
@@ -92,7 +92,7 @@
 }
 
 /* 延長可能の目印としての[+] */
-.menu ul > li > a + ul + a {
+div[class$=menu] ul > li > a + ul + a {
 	display: block;
 	padding: 1em 5%;
 	margin: 0;
@@ -103,6 +103,6 @@
 }
 
 /* サブメニューの初期設定 */
-.menu li a + ul {
+div[class$=menu] li a + ul {
 	display: none;
 }

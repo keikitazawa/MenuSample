@@ -2,7 +2,8 @@
  * options
  * 	btn: element of Hamburger button. :default 'btn_hamburger'
  * 	menu: element of menu area. :default 'menu'
- *  menu_type: distination [left, right]
+ *  menu_type: distination [left, right, top]
+ *   You can also set buttom, but it does not work well.
  *  menu_width: [recommend config] width of menu
  *  menu_zindex [recommend config] z-index value. default 1000.
  *  content: content area. default 'row'
@@ -156,12 +157,11 @@ CustomSlideMenu.prototype.clickButton = function(){
 		if (this.o.menu_type == "left" || this.o.menu_type == "right"){
 			$(this.o.menu).css("overflow-x", "scroll");
 		}
-		// 縦スクロールを表示しないため
+		// 縦スクロールは表示する
 		if (this.o.menu_type == "top" || this.o.menu_type == "bottom"){
-			$("body").css("overflow", "hidden");
+			$("body").css("overflow", "auto");
 			$(this.o.menu).css("overflow-y", "scroll");
 		}
-
 		// メニュー表示→アニメーション
 		this.__buildOverlay();
 		this.__showMenu();
