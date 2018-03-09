@@ -16,16 +16,18 @@ var CustomSlideMenu = function(options){
 	this.direction = ["left", "right", "top", "bottom"];
 
 	// メンバ変数設定
-	this.init();
+	this.__init();
 	// ボタン設定
-	this.buttonReady();
+	this.__buttonReady();
 	// メニュー設定
-	this.menuReady();
+	this.__menuReady();
 	// コンテンツ設定
-	this.contentsReady();
+	// this.__contentsReady();
 }
-
-CustomSlideMenu.prototype.init = function() {
+/**
+ * 初期処理
+ */
+CustomSlideMenu.prototype.__init = function() {
 	/**
 	 * ハンバーガーボタンの設定
 	 */
@@ -93,12 +95,12 @@ CustomSlideMenu.prototype.init = function() {
 /**
  * ハンバーガーボタンの初期設定
  */
-CustomSlideMenu.prototype.buttonReady = function(){
+CustomSlideMenu.prototype.__buttonReady = function(){
 	var root = this;
 	// click event
 	$(this.o.btn).click(
 		function(){
-			root.clickButton();
+			root.__clickButton();
 		}
 	);
 }
@@ -106,7 +108,7 @@ CustomSlideMenu.prototype.buttonReady = function(){
 /**
  * メニューの初期設定
  */
-CustomSlideMenu.prototype.menuReady = function(){
+CustomSlideMenu.prototype.__menuReady = function(){
 	// スライドで要する時間
 	$(this.o.menu).css("transition-duration", this.o.duration + "ms");
 	// メニューと同時に動かすためにposition,overflow,[left, rigth ,top, bottom]設定が必要
@@ -130,7 +132,7 @@ CustomSlideMenu.prototype.menuReady = function(){
 /**
  * コンテンツ部分の初期設定
  */
-CustomSlideMenu.prototype.contentsReady = function(){
+CustomSlideMenu.prototype.__contentsReady = function(){
 	// スライドで要する時間
 	$(this.o.content).css("transition-duration", this.o.duration + "ms");
 	// メニューと同時に動かすためにposition,overflow,[left, rigth ,top, bottom]設定が必要
@@ -142,8 +144,12 @@ CustomSlideMenu.prototype.contentsReady = function(){
 /**
  * ボタンクリックの動作
  */
-CustomSlideMenu.prototype.clickButton = function(){
+CustomSlideMenu.prototype.__clickButton = function(){
 	var root = this;
+
+	// contents側の座標指定をリセット
+	this.__contentsReset();
+	this.__contentsReady();
 
 	// buttonに属性を付与
 	$(this.o.btn).toggleClass("active");
@@ -191,6 +197,25 @@ CustomSlideMenu.prototype.clickButton = function(){
 		);
 	}
 }
+
+/**
+ * コンテンツの位置情報の反対側を削除
+ */
+CustomSlideMenu.prototype.__contentsReset = function(){
+	if (this.o.menu_type != "left"){
+		$(this.o.content).css("left", "");
+	}
+	if (this.o.menu_type != "right"){
+		$(this.o.content).css("right", "");
+	}
+	if (this.o.menu_type != "top"){
+		$(this.o.content).css("top", "");
+	}
+	if (this.o.menu_type != "bottom"){
+		$(this.o.content).css("bottom", "");
+	}
+}
+
 /**
  * メニューの物理的表示
  */
@@ -238,7 +263,7 @@ CustomSlideMenu.prototype.__buildOverlay = function(){
 	$(this.o.content).before(overlayHtml);
 	$("." + this.o.menu_overlay).click(
 		function(){
-			root.clickButton();
+			root.__clickButton();
 		}
 	);
 }

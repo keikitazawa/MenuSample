@@ -2,39 +2,39 @@ $(function() {
 	var menu1 = new CustomSlideMenu(
 		{
 		 	"btn": ".btn_hamburger", 
-		 	"menu": ".menu",
+		 	"menu": ".left_menu",
 			"menu_width": "300px",
 			"menu_type": "left"
 		}
 	);
-	// var menu2 = new CustomSlideMenu(
-	// 	{
-	// 		"btn": ".btn_hamburger", 
-	// 		"menu": ".menu",
-	// 		"menu_width": "300px",
-	// 		"menu_type": "right"
-	// 	}
-	// );
-	// var menu3 = new CustomSlideMenu(
-	// 	{
-	// 	 	"btn": ".btn_hamburger", 
-	// 	 	"menu": ".menu",
-	// 		"menu_width": "100%",
-	// 		"menu_type": "top"
-	// 	}
-	// );
-	// var menu4 = new CustomSlideMenu(
-	// 	{
-	// 	 	"btn": ".btn_hamburger", 
-	// 	 	"menu": ".menu",
-	// 		"menu_width": "100%",
-	// 		"menu_type": "bottom"
-	// 	}
-	// );
+	var menu2 = new CustomSlideMenu(
+		{
+			"btn": ".btn_hamburger_right", 
+			"menu": ".right_menu",
+			"menu_width": "300px",
+			"menu_type": "right"
+		}
+	);
+	var menu3 = new CustomSlideMenu(
+		{
+		 	"btn": ".btn_hamburger_top", 
+		 	"menu": ".top_menu",
+			"menu_width": "100%",
+			"menu_type": "top"
+		}
+	);
+	var menu4 = new CustomSlideMenu(
+		{
+		 	"btn": ".btn_hamburger_bottom", 
+		 	"menu": ".bottom_menu",
+			"menu_width": "100%",
+			"menu_type": "bottom"
+		}
+	);
 	/**
 	 * ナビのリンクで子メニューを表示
 	 */
-	$(".menu li a + ul + a").click(
+	$("div[class$=menu] li a + ul + a").click(
 		function(){
 			$(this).prev("ul").toggleClass("active");
 			$(this).prev("ul").toggle(
@@ -51,7 +51,7 @@ $(function() {
 			);
 		}
 	);
-	$(".menu li a").click(
+	$("div[class$=menu] li a").click(
 		function(){
 			$(this).next("ul").toggleClass("active");
 			$(this).next("ul").toggle(
