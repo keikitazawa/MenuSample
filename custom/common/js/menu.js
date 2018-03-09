@@ -29,7 +29,7 @@ $(function() {
 		 	"menu": ".bottom_menu",
 			"menu_width": "100%",
 			"menu_type": "bottom",
-			"is_slide": false
+			// "is_slide": false
 		}
 	);
 	/**

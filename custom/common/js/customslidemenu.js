@@ -88,7 +88,7 @@ CustomSlideMenu.prototype.__init = function() {
 	if (this.o.is_slide === undefined){
 		this.o.is_slide = true;
 	}
-
+	// プログラムでメニューを意図的に隠しているため、隠さないオプションを作成
 	/**
 	 * メインコンテンツ
 	 */

@@ -106,3 +106,12 @@ div[class$=menu] ul > li > a + ul + a {
 div[class$=menu] li a + ul {
 	display: none;
 }
+
+@media screen and (min-width: 768px){
+	div[class^=btn_hamburger] {
+		display: none;
+	}
+	.left_menu {
+		display: block;
+	}
+}
