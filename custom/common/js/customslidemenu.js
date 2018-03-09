@@ -8,6 +8,7 @@
  *  menu_zindex [recommend config] z-index value. default 1000.
  *  content: content area. default 'row'
  *  duration: slide speed(Unit is MilliSeconds). default 700.
+ *  is_slide: default true. true: menu and contents are slide. false: menu is slide, contents dont slide.
  */
 var CustomSlideMenu = function(options){
 	this.o = options;
@@ -21,8 +22,6 @@ var CustomSlideMenu = function(options){
 	this.__buttonReady();
 	// メニュー設定
 	this.__menuReady();
-	// コンテンツ設定
-	// this.__contentsReady();
 }
 /**
  * 初期処理
@@ -84,6 +83,12 @@ CustomSlideMenu.prototype.__init = function() {
 	if (this.o.duration === undefined){
 		this.o.duration = 700;
 	}
+
+	// メニューとコンテンツを同時にスライドさせるか
+	if (this.o.is_slide === undefined){
+		this.o.is_slide = true;
+	}
+
 	/**
 	 * メインコンテンツ
 	 */
@@ -135,10 +140,27 @@ CustomSlideMenu.prototype.__menuReady = function(){
 CustomSlideMenu.prototype.__contentsReady = function(){
 	// スライドで要する時間
 	$(this.o.content).css("transition-duration", this.o.duration + "ms");
-	// メニューと同時に動かすためにposition,overflow,[left, rigth ,top, bottom]設定が必要
+	// メニューと同時に動かすためにposition,[left, rigth ,top, bottom]設定が必要
 	$(this.o.content).css("position", "relative");
-	// $(this.o.content).css("overflow", "auto");
 	$(this.o.content).css(this.o.menu_type, "0px");
+}
+
+/**
+ * コンテンツの位置情報の反対側を削除
+ */
+CustomSlideMenu.prototype.__contentsReset = function(){
+	if (this.o.menu_type != "left"){
+		$(this.o.content).css("left", "");
+	}
+	if (this.o.menu_type != "right"){
+		$(this.o.content).css("right", "");
+	}
+	if (this.o.menu_type != "top"){
+		$(this.o.content).css("top", "");
+	}
+	if (this.o.menu_type != "bottom"){
+		$(this.o.content).css("bottom", "");
+	}
 }
 
 /**
@@ -199,24 +221,6 @@ CustomSlideMenu.prototype.__clickButton = function(){
 }
 
 /**
- * コンテンツの位置情報の反対側を削除
- */
-CustomSlideMenu.prototype.__contentsReset = function(){
-	if (this.o.menu_type != "left"){
-		$(this.o.content).css("left", "");
-	}
-	if (this.o.menu_type != "right"){
-		$(this.o.content).css("right", "");
-	}
-	if (this.o.menu_type != "top"){
-		$(this.o.content).css("top", "");
-	}
-	if (this.o.menu_type != "bottom"){
-		$(this.o.content).css("bottom", "");
-	}
-}
-
-/**
  * メニューの物理的表示
  */
 CustomSlideMenu.prototype.__showMenu = function(){
@@ -228,8 +232,10 @@ CustomSlideMenu.prototype.__showMenu = function(){
 CustomSlideMenu.prototype.__inMenu = function(){
 	$(this.o.menu).css(this.o.menu_type, 0);
 	$(this.o.content).css("position", "relative");
-	$(this.o.content).css("overflow", "hidden");
-	$(this.o.content).css(this.o.menu_type, this.o.menu_width);
+	if (this.o.is_slide){
+		$(this.o.content).css("overflow", "hidden");
+		$(this.o.content).css(this.o.menu_type, this.o.menu_width);
+	}
 }
 /**
  * メニューのスライドアウト
@@ -237,8 +243,10 @@ CustomSlideMenu.prototype.__inMenu = function(){
 CustomSlideMenu.prototype.__outMenu = function(){
 	$(this.o.menu).css(this.o.menu_type, this.o.menu_width * (-1));
 	$(this.o.content).css("position", "relative");
-	$(this.o.content).css("overflow", "auto");
-	$(this.o.content).css(this.o.menu_type, 0);
+	if (this.o.is_slide){
+		$(this.o.content).css("overflow", "auto");
+		$(this.o.content).css(this.o.menu_type, 0);
+	}
 }
 /** 
  * メニューの物理的非表示
