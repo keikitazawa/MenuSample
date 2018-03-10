@@ -51,14 +51,55 @@ var vavi = new CustomSlideMenu(
 	height: 100%;
 	width: [設定値];
 	left: [設定値] * (-1);		/* 左メニューのみ */
-	right: [設定値] * (-1);	/* 右メニューのみ */
+	right: [設定値] * (-1);		/* 右メニューのみ */
 }
 ```
 - スライドメニューを複数作成可能  
   ボタンとメニューをJavaScript側で用意すると実現できる。他のメニューを閉じるまで開かない想定で作成可能。
 
+
+### ソースの修正により可能な機能
+- タブレット・PCなどの横幅の広い画面だけメニューを表示してスマホの幅だけスライドメニューにする機能。   
+  PCメニューとスライドするメニューを別途作成することで実現できる。
+```html
+<div class="left_menu">
+	<ul>[スライドメニュー]</ul>
+</div>
+<div class="row">
+	<div class="btn_hamburger"></button>
+	<div class="col-sm-3">
+		<div class="pc-menu">
+			<ul>[PC画面向け固定メニュー]</ul>
+		</div>
+	</div>
+	<div class="col-sm-9">
+		[コンテンツ]
+	</div>
+</row>
+```
+```css
+@media screen and (min-width: 768px){
+	div[class=btn_hamburger] {
+		display: none;
+	}
+	.left_menu {
+		display: block;
+	}
+	.pc-menu {
+		display: block;
+	}
+}
+
+@media screen and (max-width: 767px){
+	.pc-menu {
+		display: none;
+	}
+}
+```
+スライドメニューはJavaScript側でcssを操作しているため、cssのメディアクエリでハンバーガーボタンとPC向け画面のメニューを制御すると良い。
+
+
 ## 作成予定の拡張機能
-- widthが広い時はメニューを常時表示（上下左右に設定可能）
 - メニュー移動前～後のイベントの設定
 
 ## 未決定事項

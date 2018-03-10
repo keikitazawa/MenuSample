@@ -4,7 +4,8 @@ $(function() {
 		 	"btn": ".btn_hamburger", 
 		 	"menu": ".left_menu",
 			"menu_width": "300px",
-			"menu_type": "left"
+			"menu_type": "left",
+			"is_pc_menu": true
 		}
 	);
 	var menu2 = new CustomSlideMenu(

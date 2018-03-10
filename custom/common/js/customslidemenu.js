@@ -9,6 +9,7 @@
  *  content: content area. default 'row'
  *  duration: slide speed(Unit is MilliSeconds). default 700.
  *  is_slide: default true. true: menu and contents are slide. false: menu is slide, contents dont slide.
+ *  is_pc_menu: default false. 
  */
 var CustomSlideMenu = function(options){
 	this.o = options;
@@ -88,6 +89,11 @@ CustomSlideMenu.prototype.__init = function() {
 	if (this.o.is_slide === undefined){
 		this.o.is_slide = true;
 	}
+	// PCメニュー判定（PC画面メニューの場合は幅が広い時はメニューを表示する）
+	if (this.o.is_pc_menu === undefined){
+		this.o.is_pc_menu = false;
+	}
+
 	// プログラムでメニューを意図的に隠しているため、隠さないオプションを作成
 	/**
 	 * メインコンテンツ
