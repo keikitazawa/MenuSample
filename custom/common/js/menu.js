@@ -5,7 +5,7 @@ $(function() {
 		 	"menu": ".left_menu",
 			"menu_width": "300px",
 			"menu_type": "left",
-			"is_pc_menu": true
+			"pc_menu_width": 767
 		}
 	);
 	var menu2 = new CustomSlideMenu(

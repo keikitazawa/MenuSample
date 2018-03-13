@@ -9,7 +9,7 @@
  *  content: content area. default 'row'
  *  duration: slide speed(Unit is MilliSeconds). default 700.
  *  is_slide: default true. true: menu and contents are slide. false: menu is slide, contents dont slide.
- *  is_pc_menu: default false. 
+ *  pc_menu_width: default 0. Width displayed as PC-menu.
  */
 var CustomSlideMenu = function(options){
 	this.o = options;
@@ -23,6 +23,8 @@ var CustomSlideMenu = function(options){
 	this.__buttonReady();
 	// メニュー設定
 	this.__menuReady();
+	// ウィンドウサイズの変更イベント
+	this.__resizeWindow();
 }
 /**
  * 初期処理
@@ -90,8 +92,11 @@ CustomSlideMenu.prototype.__init = function() {
 		this.o.is_slide = true;
 	}
 	// PCメニュー判定（PC画面メニューの場合は幅が広い時はメニューを表示する）
-	if (this.o.is_pc_menu === undefined){
-		this.o.is_pc_menu = false;
+	if (this.o.pc_menu_width === undefined){
+		this.o.__is_pc_menu = false;
+		this.o.pc_menu_width = 0;
+	}else {
+		this.o.__is_pc_menu = true;
 	}
 
 	// プログラムでメニューを意図的に隠しているため、隠さないオプションを作成
@@ -117,16 +122,21 @@ CustomSlideMenu.prototype.__buttonReady = function(){
 }
 
 /**
+ * ウィンドウサイズ変更イベントの設定
+ */
+CustomSlideMenu.prototype.__resizeWindow = function(){
+	var root = this;
+	$(window).resize(
+		function(){
+			root.__menuReady();
+		}
+	);
+}
+
+/**
  * メニューの初期設定
  */
 CustomSlideMenu.prototype.__menuReady = function(){
-	// スライドで要する時間
-	$(this.o.menu).css("transition-duration", this.o.duration + "ms");
-	// メニューと同時に動かすためにposition,overflow,[left, rigth ,top, bottom]設定が必要
-	$(this.o.menu).css("position", "absolute");
-	$(this.o.menu).css(this.o.menu_type, this.o.menu_width * (-1));
-	$(this.o.menu).hide();
-
 	// メニュー幅を０にする
 	if (this.o.menu_type == "left" || this.o.menu_type == "right"){
 		$(this.o.menu).css("top", "0px");
@@ -137,6 +147,28 @@ CustomSlideMenu.prototype.__menuReady = function(){
 		$(this.o.menu).css("left", "0px");
 		$(this.o.menu).css("width", "100%");
 		$(this.o.menu).css("height", this.o.menu_width);
+	}
+
+	// スライドで要する時間
+	$(this.o.menu).css("transition-duration", this.o.duration + "ms");
+	if (this.o.__is_pc_menu){
+		if ($(window).width() > this.o.pc_menu_width){
+			// widthを持たせない
+			$(this.o.menu).css("width", "");
+			// htmlの仕様どおりにする
+			$(this.o.menu).css("position", "inherit");
+			$(this.o.menu).css(this.o.menu_type, "");
+			$(this.o.menu).show();
+		}else {
+			$(this.o.menu).css("position", "fixed");
+			$(this.o.menu).css(this.o.menu_type, this.o.menu_width * (-1));
+			$(this.o.menu).hide();
+		}
+	}else {
+		// メニューと同時に動かすためにposition,overflow,[left, rigth ,top, bottom]設定が必要
+		$(this.o.menu).css("position", "fixed");
+		$(this.o.menu).css(this.o.menu_type, this.o.menu_width * (-1));
+		$(this.o.menu).hide();
 	}
 }
 

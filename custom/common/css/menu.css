@@ -114,9 +114,6 @@ div[class$=menu] li a + ul {
 	.left_menu {
 		display: block;
 	}
-	.pc-menu {
-		display: block;
-	}
 }
 
 @media screen and (max-width: 767px){
