@@ -48,7 +48,7 @@ var vavi = new CustomSlideMenu(
 }
 .menu {
 	transition: all 0.8s;
-	position: absolute;
+	position: fixed;
 	top: 0px;
 	height: 100%;
 	width: [設定値];
@@ -62,32 +62,27 @@ var vavi = new CustomSlideMenu(
 
 ### ソースの修正により可能な機能
 - タブレット・PCなどの横幅の広い画面だけメニューを表示してスマホの幅だけスライドメニューにする機能。   
-  PCメニューとスライドするメニューを別途作成することで実現できる。
+  PC表示の場合は普通に表示するが、幅を狭くしてスマホ表示にする場合にコンテンツ部分を調節する必要がある。  
+  以下の例ではxs属性が適用される場合にleft_menuクラスのメニューをスライドメニューにする。
 ```html
-<div class="left_menu">
-	<ul>[スライドメニュー]</ul>
-</div>
 <div class="row">
 	<div class="btn_hamburger"></button>
 	<div class="col-sm-3">
-		<div class="pc-menu">
+		<div class="left_menu">
 			<ul>[PC画面向け固定メニュー]</ul>
 		</div>
 	</div>
-	<div class="col-sm-9">
+	<div class="col-xs-12 col-sm-9">
 		[コンテンツ]
 	</div>
 </row>
 ```
 ```css
 @media screen and (min-width: 768px){
-	div[class=btn_hamburger] {
+	div[class^=btn_hamburger] {
 		display: none;
 	}
 	.left_menu {
-		display: block;
-	}
-	.pc-menu {
 		display: block;
 	}
 }
@@ -97,6 +92,17 @@ var vavi = new CustomSlideMenu(
 		display: none;
 	}
 }
+```
+```js
+var menu1 = new CustomSlideMenu(
+	{
+		"btn": ".btn_hamburger", 
+		"menu": ".left_menu",
+		"menu_width": "300px",
+		"menu_type": "left",
+		"pc_menu_width": 768
+	}
+);
 ```
 スライドメニューはJavaScript側でcssを操作しているため、cssのメディアクエリでハンバーガーボタンとPC向け画面のメニューを制御すると良い。
 

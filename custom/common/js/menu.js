@@ -5,7 +5,7 @@ $(function() {
 		 	"menu": ".left_menu",
 			"menu_width": "300px",
 			"menu_type": "left",
-			"pc_menu_width": 767
+			"pc_menu_width": 751
 		}
 	);
 	var menu2 = new CustomSlideMenu(
@@ -71,3 +71,9 @@ $(function() {
 		}
 	);
 });
+
+$(window).resize(
+	function(){
+		$("#WidthValue").text($(window).width());
+	}
+);

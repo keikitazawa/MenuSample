@@ -152,7 +152,7 @@ CustomSlideMenu.prototype.__menuReady = function(){
 	// スライドで要する時間
 	$(this.o.menu).css("transition-duration", this.o.duration + "ms");
 	if (this.o.__is_pc_menu){
-		if ($(window).width() > this.o.pc_menu_width){
+		if ($(window).width() >= this.o.pc_menu_width){
 			// widthを持たせない
 			$(this.o.menu).css("width", "");
 			// htmlの仕様どおりにする
