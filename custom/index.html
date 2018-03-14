@@ -6,7 +6,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>${siteTitle}</title>
 	<link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css" />
-	<link rel="stylesheet" href="./common/css/menu.css" />
+	<link rel="stylesheet" href="./common/css/customslidemenu.css" />
 	<script type="text/javascript" src="./common/js/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript" src="./bootstrap/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="./common/js/customslidemenu.js"></script>
@@ -176,48 +176,69 @@
 			<span></span>
 			<span></span>
 		</div> -->
-		<div class="col-sm-12">
-			<h1>demosite<span id="WidthValue" /></h1>
+		<div class="page-header col-sm-12">
+			<h1>demosite <span id="WidthValue" /></h1>
 		</div>
-		<div class="col-sm-3">
-			<div class="panel panel-default">
-				<div class="panel-heading">左メニュー</div>
-				<div class="left_menu">
-					<ul>
-						<li><a href="#">リスト1</a></li>
-						<li><a href="#">リスト2</a></li>
-						<li>
-							<a href="#">リスト3（プルダウン）</a>
-							<ul>
-								<li><a href="#">リスト3-1</a></li>
-								<li><a href="#">リスト3-2</a></li>
-								<li>
-									<a href="#">リスト3-3</a>
-									<ul>
-										<li><a href="#">リスト3-3-1</a></li>
-										<li><a href="#">リスト3-3-2</a></li>
-									</ul>
-									<a href="#">+</a>
-								</li>
-							</ul>
-							<a href="#">+</a>
-						</li>
-						<li><a href="#">リスト4</a></li>
-						<li><a href="#">リスト5</a></li>
-						<li><a href="#">リスト6</a></li>
-						<li><a href="#">リスト7</a></li>
-						<li><a href="#">リスト8</a></li>
-						<li><a href="#">リスト9</a></li>
-						<li><a href="#">リスト10</a></li>
-						<li><a href="#">リスト11</a></li>
-						<li><a href="#">リスト12</a></li>
-						<li><a href="#">リスト13</a></li>
-						<li><a href="#">リスト14</a></li>
-						<li><a href="#">リスト15</a></li>
-						<li><a href="#">リスト16</a></li>
-					</ul>
-				</div>
+		<div class="col-sm-3" role="navigator">
+			<div class="well sidebar-nav left_menu">
+				<ul class="nav">
+					<li><span>左メニュー</span></li>
+					<li><a href="#">リスト1</a></li>
+					<li><a href="#">リスト2</a></li>
+					<li>
+						<a href="#">リスト3（プルダウン）</a>
+						<ul>
+							<li><a href="#">リスト3-1</a></li>
+							<li><a href="#">リスト3-2</a></li>
+							<li>
+								<a href="#">リスト3-3</a>
+								<ul>
+									<li><a href="#">リスト3-3-1</a></li>
+									<li><a href="#">リスト3-3-2</a></li>
+								</ul>
+								<a href="#">+</a>
+							</li>
+						</ul>
+						<a href="#">+</a>
+					</li>
+					<li><a href="#">リスト4</a></li>
+					<li><a href="#">リスト5</a></li>
+					<li><a href="#">リスト6</a></li>
+					<li><a href="#">リスト7</a></li>
+					<li><a href="#">リスト8</a></li>
+					<li><a href="#">リスト9</a></li>
+					<li><a href="#">リスト10</a></li>
+					<li><a href="#">リスト11</a></li>
+					<li><a href="#">リスト12</a></li>
+					<li><a href="#">リスト13</a></li>
+					<li><a href="#">リスト14</a></li>
+					<li><a href="#">リスト15</a></li>
+					<li><a href="#">リスト16</a></li>
+				</ul>
 			</div>
+		</div>
+		<div class="col-xs-12 col-sm-9">
+			<table class="table table-striped table-hover">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Name</th>
+						<th>operation</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>*****</td>
+						<td>NNNNN</td>
+						<td>
+							<a href="" class="btn btn-primary btn-xs">詳細</a>
+							<a href="" class="btn btn-primary btn-xs">編集</a>
+							<a href="" class="btn btn-primary btn-xs">削除</a>
+						</td>
+					</tr>
+				</table>
+				</tbody>
+			</table>
 		</div>
 		<div class="col-xs-12 col-sm-9">
 			<div class="inner">

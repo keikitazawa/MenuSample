@@ -26,17 +26,17 @@ div[class^=btn_hamburger] span {
 	top: 19px;		/* 目視確認で調整する値 */
 	left: 15%;
 }
-div[class^=btn_hamburger]  span:nth-child(1) {
+div[class^=btn_hamburger] span:nth-child(1) {
 	-webkit-transform: translateY(-10px);
 	-moz-transform: translateY(-10px);
 	transform: translateY(-10px);
 }
-div[class^=btn_hamburger]  span:nth-child(2) {
+div[class^=btn_hamburger] span:nth-child(2) {
 	-webkit-transform: rotate(0deg);
 	-moz-transform: rotate(0deg);
 	transform: rotate(0deg);
 }
-div[class^=btn_hamburger]  span:nth-child(3) {
+div[class^=btn_hamburger] span:nth-child(3) {
 	-webkit-transform: translateY(10px);
 	-moz-transform: translateY(10px);
 	transform: translateY(10px);
@@ -77,13 +77,16 @@ div[class$=menu] ul {
 div[class$=menu] li {
 	width: 100%;
 	padding: 0;
+	margin: 0;
 	border-top: 1px solid aliceblue;
 	list-style-type: none;
 	position: relative;
 }
 
-/* リンク */
-div[class$=menu] li a {
+/* リンク・ラベル */
+div[class$=menu] li a,
+div[class$=menu] li span
+ {
 	display: block;
 	padding: 1em 5%;
 	margin: 0;
