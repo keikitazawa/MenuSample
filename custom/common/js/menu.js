@@ -70,6 +70,13 @@ $(function() {
 			);
 		}
 	);
+	$("#modal-example").on('show.bs.modal', 
+		function (event){
+			// このイベント下で理想のhtmlを出力する
+			var button = $(event.relatedTarget);
+			var recipient = button.data('test1');
+		}
+	);
 });
 
 $(window).resize(

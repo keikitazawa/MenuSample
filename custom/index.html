@@ -239,6 +239,10 @@
 				</table>
 				</tbody>
 			</table>
+
+			<button class="btn btn-primary" data-toggle="modal" data-target="#modal-example" data-test1="hoge">
+				モーダルダイアログ表示
+			</button>
 		</div>
 		<div class="col-xs-12 col-sm-9">
 			<div class="inner">
@@ -249,8 +253,32 @@
 		</div>
 	</div>
 </div>
-
-<!-- for Dialog -->
-<div id="DialogArea" class="" style="display: none;"></div>
+<!-- dialog -->
+<div class="modal" id="modal-example" tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="modal-label">ダイアログ</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-xs-3 col-sm-12">
+						xs3 sm12
+					</div>
+					<div class="col-xs-9 col-sm-12">
+						xs9 sm12
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+				<button type="button" class="btn btn-primary">保存</button>
+			</div>
+		</div>
+	</div>
+</div>
 </body>
 </html>
